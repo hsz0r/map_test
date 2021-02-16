@@ -149,12 +149,7 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 	public void printValTree() {
             toTreeString(root, 2);
         }
-        /**
-	 * Binary tree printer
-	 * 
-	 * @author MightyPork
-	 * https://stackoverflow.com/a/29704252
-	 */
+
 	private void toTreeString(Node root, int ctrl)
 	{
 		List<List<String>> lines = new ArrayList<List<String>>();
@@ -215,7 +210,6 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 			if (i > 0) {
 				for (int j = 0; j < line.size(); j++) {
 
-					// split node
 					char c = ' ';
 					if (j % 2 == 1) {
 						if (line.get(j - 1) != null) {
@@ -245,7 +239,7 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 				System.out.println();
 			}
 
-			// print line of numbers
+
 			for (int j = 0; j < line.size(); j++) {
 
 				String f = line.get(j);
