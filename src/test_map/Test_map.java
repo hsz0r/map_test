@@ -37,9 +37,11 @@ public class Test_map {
         for (int i = 1; i <= 10000; i++){
             test.add(i,(int) (Math.random() * +999));
         }
+
         System.out.println(test.rightBalanceTest());
         test.printKeyTree();
         System.out.println(test.maxHeightTest());
+
         //test.clear();
         map test1 = new map(test);        
         //System.out.println(test1.contains(40));

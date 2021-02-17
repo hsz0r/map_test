@@ -64,6 +64,7 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     
     public void clear() {
         root = null;
+        size = 0;
     }
     
     public V get(K key) {
@@ -87,18 +88,19 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     public boolean rightBalanceTest(){
         return rightBalanceTest(root);
     }
-    private boolean rightBalanceTest(Node root){
-        Node temp = root;
+    private boolean rightBalanceTest(Node temp){
         if(temp == null){   
             return true;
-        }                    
-        int leftHeight= height(temp.left);
-        int rightHeight= height(temp.right);
-
-        if(Math.abs(leftHeight - rightHeight) <=1 && rightBalanceTest(temp.left) && rightBalanceTest(temp.right)){
-            return true;
+        }else{
+            int leftHeight= height(temp.left);
+            int rightHeight= height(temp.right);
+            
+            if(Math.abs(leftHeight - rightHeight) > 1){
+                return false;
+            }else{
+                return (rightBalanceTest(temp.left) && rightBalanceTest(temp.right));
+            }
         }
-        return false;
     }
     
     private Node add(Node node, K key, V value){
