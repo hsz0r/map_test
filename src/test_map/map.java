@@ -19,7 +19,18 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     private Node root;
     private int size;
 
-        
+    class Comparator<T extends Comparable>{
+        public boolean Comparator(T object1, T object2) {
+            if (object1.compareTo(object2) < 0){
+                return true;
+            } else {
+            return false;
+            }
+        }
+    }
+
+
+  
     private class Node {
         
         private K key;

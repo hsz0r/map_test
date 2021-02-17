@@ -17,22 +17,33 @@ public class Test_map {
     public static void main(String[] args) {
         // TODO code application logic here
         map test = new map();
-//        for (int i = 1; i <= 50; i++){
-//            test.add(i,i);
-//        }
-//        test.printKeyTree();
-//        
-//        test.clear();
+        
+        for (int i = 1; i <= 50; i++){
+            test.add(i,i);
+        }
+        test.printKeyTree();
+        System.out.println(test.maxHeightTest());
+        test.clear();
+        
+        int a = 50;
+        for (int i = 1; i <= 50; i++){
+            test.add(i,a);
+            a--;
+        }
+        test.printKeyTree();
+        System.out.println(test.maxHeightTest());
+        test.clear();
             
         for (int i = 1; i <= 20; i++){
             test.add(i,(int) (Math.random() * +999));
         }
-        System.out.println(test.getSize());
-        map test1 = new map(test);        
         test.printKeyTree();
-        System.out.println(test.contains(40));
         System.out.println(test.maxHeightTest());
+        //test.clear();
         
+        map test1 = new map(test);        
+        System.out.println(test1.contains(40));
+
     }
     
 }
