@@ -11,28 +11,34 @@ import java.util.List;
 /**
  *
  * @author hsz0r
+ * @param <K>
+ * @param <V>
  */
 public class map<K extends Comparable<K>, V extends Comparable<V>> {
     
-    public Node root;
+    private Node root;
+    private int size;
+
         
-    public class Node {
+    private class Node {
         
-        public K key;
-        public V value;
-        public int height;
-        public Node left;
-        public Node right;
+        private K key;
+        private V value;
+        private int height;
+        private Node left;
+        private Node right;
         
         Node(V value, K key){
-            this.height = 0;
             this.value = value;
             this.key = key;
+            this.height = 0;
         }
     }
     
     public map(){
-        root = null;
+        this.root = null;
+        this.size = 0;
+
     }
     public map(map map){ 
         this.root = recursiveCopy(map.root);
@@ -57,11 +63,20 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     
     public void add(V value, K key) {
         this.root = add(root, key, value);
+        this.size++;
+    }
+    
+    public int getSize(){
+        return this.size;
+    }
+    
+    public boolean maxHeightTest(){
+        return this.root.height <= (1.45*(Math.log((getSize() + 2))/Math.log(2)));
     }
     
     private Node add(Node node, K key, V value){
         if (node == null) return new Node(value, key);
-        if (node.key.equals(value)) throw new IllegalArgumentException("Values should be different");
+        if (node.value.equals(value)) throw new IllegalArgumentException("Values should be different");
         if (key.compareTo(node.key) < 0) {
             node.left = add(node.left, key, value);
         } else if (key.compareTo(node.key) > 0) {
@@ -115,13 +130,15 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     private void updateHeight(Node node) {
         node.height = 1 + Math.max(height(node.left), height(node.right));
     }
+    
     private int getBalance(Node x) {
         return height(x.left) - height(x.right);
     }
-    private int height(Node node) {
+    public int height(Node node) {
         if (node == null) return -1;
         return node.height;
     }
+    
     private Node rotateRight(Node node) {
         Node newNode = node.left;
         node.left = newNode.right;
@@ -146,16 +163,16 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     public void printKeyTree() {
         toTreeString(root, 1);
     }
-	public void printValTree() {
-            toTreeString(root, 2);
-        }
+    public void printValTree() {
+        toTreeString(root, 2);
+    }
 
 	private void toTreeString(Node root, int ctrl)
 	{
-		List<List<String>> lines = new ArrayList<List<String>>();
+		List<List<String>> lines = new ArrayList<>();
 
-		List<Node> level = new ArrayList<Node>();
-		List<Node> next = new ArrayList<Node>();
+		List<Node> level = new ArrayList<>();
+		List<Node> next = new ArrayList<>();
 
 		level.add(root);
 		int nn = 1;
@@ -163,7 +180,7 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 		int widest = 0;
 
 		while (nn != 0) {
-			List<String> line = new ArrayList<String>();
+			List<String> line = new ArrayList<>();
 
 			nn = 0;
 
@@ -175,12 +192,17 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 					next.add(null);
 				} else {
 					String aa;
-					if (ctrl == 0)
-						aa = n.toString();
-					else if (ctrl == 1)
-						aa = n.key.toString();
-					else
-						aa = n.value.toString();
+                                    switch (ctrl) {
+                                        case 0:
+                                            aa = n.toString();
+                                            break;
+                                        case 1:
+                                            aa = n.key.toString();
+                                            break;
+                                        default:
+                                            aa = n.value.toString();
+                                            break;
+                                    }
 					line.add(aa);
 					if (aa.length() > widest) widest = aa.length();
 
@@ -220,7 +242,6 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 					}
 					System.out.print(c);
 
-					// lines and spaces
 					if (line.get(j) == null) {
 						for (int k = 0; k < perpiece - 1; k++) {
 							System.out.print(" ");
@@ -239,7 +260,6 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 				System.out.println();
 			}
 
-
 			for (int j = 0; j < line.size(); j++) {
 
 				String f = line.get(j);
@@ -247,7 +267,6 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 				int gap1 = (int) Math.ceil(perpiece / 2f - f.length() / 2f);
 				int gap2 = (int) Math.floor(perpiece / 2f - f.length() / 2f);
 
-				// a number
 				for (int k = 0; k < gap1; k++) {
 					System.out.print(" ");
 				}
