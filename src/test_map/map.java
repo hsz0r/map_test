@@ -84,6 +84,22 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
     public boolean maxHeightTest(){
         return this.root.height <= (1.45*(Math.log((getSize() + 2))/Math.log(2)));
     }
+    public boolean rightBalanceTest(){
+        return rightBalanceTest(root);
+    }
+    private boolean rightBalanceTest(Node root){
+        Node temp = root;
+        if(temp == null){   
+            return true;
+        }                    
+        int leftHeight= height(temp.left);
+        int rightHeight= height(temp.right);
+
+        if(Math.abs(leftHeight - rightHeight) <=1 && rightBalanceTest(temp.left) && rightBalanceTest(temp.right)){
+            return true;
+        }
+        return false;
+    }
     
     private Node add(Node node, K key, V value){
         if (node == null) return new Node(value, key);
@@ -262,7 +278,7 @@ public class map<K extends Comparable<K>, V extends Comparable<V>> {
 						for (int k = 0; k < hpw; k++) {
 							System.out.print(j % 2 == 0 ? " " : "─");
 						}
-						System.out.print(j % 2 == 0 ? "┌" : "┐");
+						System.out.print(j % 2 == 0 ? "/" : "\\");
 						for (int k = 0; k < hpw; k++) {
 							System.out.print(j % 2 == 0 ? "─" : " ");
 						}
